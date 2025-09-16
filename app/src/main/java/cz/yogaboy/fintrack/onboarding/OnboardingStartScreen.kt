@@ -4,10 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -15,18 +18,14 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -55,7 +54,7 @@ fun OnboardingStartRoute(
 
     OnboardingStartScreen(
         state = vm.uiState.collectAsStateWithLifecycle().value,
-        onClick = vm::handleEvent
+        onClick = vm::handleEvent,
     )
 }
 
@@ -64,14 +63,12 @@ fun OnboardingStartScreen(
     state: OnboardingUiState,
     onClick: (OnboardingEvent) -> Unit,
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(
-                horizontal = FintrackTheme.dimens.large,
-                vertical = FintrackTheme.dimens.xlarge,
-            ),
+            .windowInsetsPadding(WindowInsets.safeDrawing)
+            .padding(horizontal = FintrackTheme.dimens.large)
+            .padding(top = FintrackTheme.dimens.xlarge),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         OnboardingWelcomeHeader()
@@ -120,7 +117,9 @@ fun OnboardingStartScreen(
         }
         Button(
             onClick = { onClick(OnboardingEvent.ExitProcess) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = FintrackTheme.dimens.xlarge),
             colors = ButtonDefaults.buttonColors(
                 containerColor = FintrackTheme.colors.primary,
                 contentColor = FintrackTheme.colors.onPrimary,

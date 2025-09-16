@@ -14,6 +14,7 @@ data class Dimens(
     val default: Dp = 16.dp,
     val large: Dp = 24.dp,
     val xlarge: Dp = 32.dp,
+    val xxlarge: Dp = 64.dp,
     val radiusSmall: Dp = 8.dp,
     val radiusMedium: Dp = 12.dp,
     val radiusLarge: Dp = 16.dp,
