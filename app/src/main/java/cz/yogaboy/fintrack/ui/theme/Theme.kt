@@ -29,7 +29,7 @@ object FintrackTheme {
     @Composable
     operator fun invoke(
         darkTheme: Boolean = isSystemInDarkTheme(),
-        dynamicColor: Boolean = false,
+        dynamicColor: Boolean = false, //Personally I hate disabling dynamic color coz they made whole system nicer
         content: @Composable () -> Unit
     ) {
         val context = LocalContext.current

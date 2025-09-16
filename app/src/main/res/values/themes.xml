@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Fintrack" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Fintrack" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="windowSplashScreenBackground">@color/teal_primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_inset_logo</item>
+        <item name="windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+    </style>
 </resources>
