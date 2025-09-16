@@ -79,26 +79,7 @@ fun CreatePinScreen(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.onb_create_pin_title),
-                        style = FintrackTheme.textStyles.titleM,
-                        color = FintrackTheme.colors.onBackground,
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { onEvent(CreatePinEvent.BackClicked) }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
-                    }
-                },
-                modifier = Modifier.padding(bottom = FintrackTheme.dimens.xlarge),
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = FintrackTheme.colors.background,
-                    titleContentColor = FintrackTheme.colors.onBackground,
-                    navigationIconContentColor = FintrackTheme.colors.onBackground,
-                )
-            )
+            PinTopBar(onEvent)
         }
     ) { innerPadding ->
         Column(
@@ -144,6 +125,31 @@ fun CreatePinScreen(
             }
         }
     }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun PinTopBar(onEvent: (CreatePinEvent) -> Unit) {
+    TopAppBar(
+        title = {
+            Text(
+                text = stringResource(R.string.onb_create_pin_title),
+                style = FintrackTheme.textStyles.titleM,
+                color = FintrackTheme.colors.onBackground,
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = { onEvent(CreatePinEvent.BackClicked) }) {
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, null)
+            }
+        },
+        modifier = Modifier.padding(bottom = FintrackTheme.dimens.xlarge),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = FintrackTheme.colors.background,
+            titleContentColor = FintrackTheme.colors.onBackground,
+            navigationIconContentColor = FintrackTheme.colors.onBackground,
+        )
+    )
 }
 
 @Composable
