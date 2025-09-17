@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import cz.yogaboy.fintrack.navigation.RootNavGraph
-import cz.yogaboy.fintrack.ui.theme.FintrackTheme
+import cz.yogaboy.ui.theme.FintrackTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Fintrack</string>
+    <string name="onb_start_title_pin">Set up a pin</string>
+    <string name="onb_start_subtitle_pin">Enhance your account security.</string>
+
+    <string name="onb_start_title_link">Link your bank accounts.</string>
+    <string name="onb_start_subtitle_link">Link your bank accounts to start tracking your expenses.</string>
+
+    <string name="onb_start_title_goal">Create a savings goal</string>
+    <string name="onb_start_subtitle_goal">What are your financial goals?</string>
+
+    <string name="onb_start_button_skip">Skip for now</string>
+    <string name="onb_create_pin_title">Create your passcode</string>
+    <string name="onb_btn_create_pin">Create a Pin</string>
+    <!--    I used here rather brand name than use app name -->
+    <string name="app_name_brand">Fintrack</string>
+    <string name="onb_start_title_fmt">Welcome to %1$s!</string>
+    <string name="onb_start_subtitle">Let’s get you set up.</string>
+    <string name="common_error_required">Wrong pin setup</string>
+    <string name="onb_create_pin_helper">For a more secure and convenient way to view your account, create a 4-digit passcode now.</string>
+</resources>

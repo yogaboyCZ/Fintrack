@@ -1,22 +1,19 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "cz.yogaboy.fintrack"
+    namespace = "cz.yogaboy.account"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "cz.yogaboy.fintrack"
         minSdk = 33
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -42,15 +39,12 @@ android {
         }
     }
 }
-
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
 dependencies {
     implementation(project(":core:ui"))
-    implementation(project(":feature:account"))
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
