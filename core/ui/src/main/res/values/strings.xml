@@ -18,4 +18,31 @@
     <string name="onb_start_subtitle">Let’s get you set up.</string>
     <string name="common_error_required">Wrong pin setup</string>
     <string name="onb_create_pin_helper">For a more secure and convenient way to view your account, create a 4-digit passcode now.</string>
+
+    <!-- Onb Page 1 -->
+    <string name="onb_tour_1_title">Track Your\nExpenses</string>
+    <string name="onb_tour_1_subtitle">
+        Get insights into where your money goes and make informed financial decisions.
+    </string>
+
+    <!-- Onb Page 2 -->
+    <string name="onb_tour_2_title">Set Savings\nGoals</string>
+    <string name="onb_tour_2_subtitle">
+        Whether it’s for a vacation, a new car, or an emergency fund, we help you stay on track.
+    </string>
+
+    <!-- Onb Page 3 -->
+    <string name="onb_tour_3_title">Get Financial\nInsights</string>
+    <string name="onb_tour_3_subtitle">
+        Access detailed reports and analytics to make better financial choices.
+    </string>
+
+    <!-- Onb Bottom sheet -->
+    <string name="onb_tour_btn_create">Create an account</string>
+    <string name="onb_tour_have_account">Already have an account?</string>
+    <string name="onb_tour_sign_in">Sign in</string>
+
+    <string name="onb_sheet_title">Create an account</string>
+    <string name="onb_sheet_body">By pressing accept below you agree to our Terms and Conditions. You can find out more about how we use your data in our Privacy Policy.</string>
+    <string name="onb_sheet_btn">Accept and Continue</string>
 </resources>

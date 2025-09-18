@@ -1,23 +1,20 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    namespace = "cz.yogaboy.fintrack"
+    namespace = "cz.yogaboy.onboarding"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "cz.yogaboy.fintrack"
         minSdk = 33
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -43,24 +40,21 @@ android {
         }
     }
 }
-
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
 dependencies {
     implementation(project(":core:ui"))
-    implementation(project(":feature:onboarding"))
-    implementation(project(":feature:account"))
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.core.splashscreen)
-    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter.api)

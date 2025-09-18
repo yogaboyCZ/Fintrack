@@ -1,4 +1,4 @@
-package cz.yogaboy.fintrack.onboarding
+package cz.yogaboy.account
 
 import app.cash.turbine.test
 import kotlinx.coroutines.Dispatchers
@@ -8,8 +8,7 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -17,11 +16,11 @@ class CreatePinViewModelTest {
 
     @Test
     fun `initial state is empty`() = runTest {
-        val vm = CreatePinViewModel()
-        val s = vm.uiState.value
-        assertEquals(listOf(null, null, null, null), s.digits)
-        assertEquals(listOf(false, false, false, false), s.maskDigit)
-        assertFalse(s.isComplete)
+        val viewModel = CreatePinViewModel()
+        val uiState = viewModel.uiState.value
+        Assertions.assertEquals(listOf(null, null, null, null), uiState.digits)
+        Assertions.assertEquals(listOf(false, false, false, false), uiState.maskDigit)
+        Assertions.assertFalse(uiState.isComplete)
     }
 
     @Test
@@ -33,12 +32,12 @@ class CreatePinViewModelTest {
             vm.handle(CreatePinEvent.DigitPressed(1))
             vm.handle(CreatePinEvent.DigitPressed(2))
 
-            assertEquals(listOf(1, 2, null, null), vm.uiState.value.digits)
-            assertEquals(listOf(true, true, false, false), vm.uiState.value.maskDigit)
+            Assertions.assertEquals(listOf(1, 2, null, null), vm.uiState.value.digits)
+            Assertions.assertEquals(listOf(true, true, false, false), vm.uiState.value.maskDigit)
 
             advanceUntilIdle()
 
-            assertEquals(listOf(false, false, false, false), vm.uiState.value.maskDigit)
+            Assertions.assertEquals(listOf(false, false, false, false), vm.uiState.value.maskDigit)
         } finally {
             Dispatchers.resetMain()
         }
@@ -49,15 +48,15 @@ class CreatePinViewModelTest {
         val vm = CreatePinViewModel()
         vm.handle(CreatePinEvent.DigitPressed(7))
         vm.handle(CreatePinEvent.DigitPressed(8))
-        assertEquals(listOf(7, 8, null, null), vm.uiState.value.digits)
+        Assertions.assertEquals(listOf(7, 8, null, null), vm.uiState.value.digits)
 
         vm.handle(CreatePinEvent.BackspacePressed)
 
-        assertEquals(listOf(7, null, null, null), vm.uiState.value.digits)
-        assertEquals(listOf(true, false, false, false), vm.uiState.value.maskDigit)
+        Assertions.assertEquals(listOf(7, null, null, null), vm.uiState.value.digits)
+        Assertions.assertEquals(listOf(true, false, false, false), vm.uiState.value.maskDigit)
 
         advanceUntilIdle()
-        assertEquals(listOf(true, false, false, false), vm.uiState.value.maskDigit)
+        Assertions.assertEquals(listOf(true, false, false, false), vm.uiState.value.maskDigit)
     }
 
     @Test
@@ -65,7 +64,7 @@ class CreatePinViewModelTest {
         val vm = CreatePinViewModel()
         vm.uiEffect.test {
             vm.handle(CreatePinEvent.BackClicked)
-            assertEquals(CreatePinEffect.NavigateBack, awaitItem())
+            Assertions.assertEquals(CreatePinEffect.NavigateBack, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }

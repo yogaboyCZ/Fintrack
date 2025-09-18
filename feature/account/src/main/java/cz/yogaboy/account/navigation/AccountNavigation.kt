@@ -5,20 +5,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import cz.yogaboy.account.CreatePinRoute
-import cz.yogaboy.account.OnboardingStartRoute
+import cz.yogaboy.account.AccountStartRoute
+import kotlinx.serialization.Serializable
 
-object AccountRoutes {
-    const val ROOT = "account"
-    const val START = "account/start"
-    const val CREATE_PIN = "account/create_pin"
-}
+@Serializable object AccountGraph
+@Serializable object AccountStart
+@Serializable object AccountCreatePin
 
 fun NavGraphBuilder.accountNavGraph(navController: NavHostController) {
-    navigation(
-        startDestination = AccountRoutes.START,
-        route = AccountRoutes.ROOT
-    ) {
-        composable(AccountRoutes.START) { OnboardingStartRoute(navController) }
-        composable(AccountRoutes.CREATE_PIN) { CreatePinRoute(navController) }
+    navigation<AccountGraph>(startDestination = AccountStart) {
+        composable<AccountStart> {
+            AccountStartRoute(navController = navController)
+        }
+        composable<AccountCreatePin> {
+            CreatePinRoute(navController = navController)
+        }
     }
 }

@@ -53,7 +53,7 @@ import cz.yogaboy.ui.R.drawable as DR
 @Composable
 fun CreatePinRoute(
     navController: NavController,
-    vm: CreatePinViewModel = viewModel()
+    vm: CreatePinViewModel = viewModel(),
 ) {
     val state = vm.uiState.collectAsStateWithLifecycle().value
 
@@ -149,7 +149,7 @@ private fun PinTopBar(onEvent: (CreatePinEvent) -> Unit) {
             containerColor = FintrackTheme.colors.background,
             titleContentColor = FintrackTheme.colors.onBackground,
             navigationIconContentColor = FintrackTheme.colors.onBackground,
-        )
+        ),
     )
 }
 
@@ -173,7 +173,7 @@ fun PasswordRow(state: CreatePinUiState) {
                 color = FintrackTheme.colors.surfaceVariant,
                 border = BorderStroke(
                     1.dp,
-                    if (filled) FintrackTheme.colors.primary else FintrackTheme.colors.outline
+                    if (filled) FintrackTheme.colors.primary else FintrackTheme.colors.outline,
                 )
             ) {
                 Box(
@@ -208,7 +208,7 @@ fun PasswordRow(state: CreatePinUiState) {
 private fun PinKeypad(
     onDigit: (Int) -> Unit,
     onBackspace: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier) {
         val digitRows = listOf(
@@ -222,7 +222,7 @@ private fun PinKeypad(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = FintrackTheme.dimens.tiny),
-                horizontalArrangement = Arrangement.spacedBy(FintrackTheme.dimens.tiny)
+                horizontalArrangement = Arrangement.spacedBy(FintrackTheme.dimens.tiny),
             ) {
                 rowDigits.forEach { digit ->
                     KeyButton(
@@ -241,7 +241,7 @@ private fun PinKeypad(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = FintrackTheme.dimens.tiny),
-            horizontalArrangement = Arrangement.spacedBy(FintrackTheme.dimens.tiny)
+            horizontalArrangement = Arrangement.spacedBy(FintrackTheme.dimens.tiny),
         ) {
             Spacer(Modifier.weight(1f))
 
@@ -274,7 +274,7 @@ private fun KeyButton(
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(defaultElevation = 0.dp),
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = FintrackTheme.colors.surfaceVariant,
-        contentColor = FintrackTheme.colors.onSurface
+        contentColor = FintrackTheme.colors.onSurface,
     ),
     content: @Composable RowScope.() -> Unit,
 ) {

@@ -1,29 +1,29 @@
-package cz.yogaboy.fintrack.onboarding
+package cz.yogaboy.account
 
 import app.cash.turbine.test
-import cz.yogaboy.fintrack.onboarding.model.OnboardingOptionUIModel
+import cz.yogaboy.account.model.OnboardingOptionUIModel
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class OnboardingViewModelTest {
+class AccountViewModelTest {
 
 
     @Test
     fun `GoToCreatePin emits NavigateToCreatePin effect`() = runTest {
-        val vm = OnboardingViewModel(uiProvider = FakeOnboardingStartUiProvider())
+        val vm = AccountViewModel(uiProvider = FakeAccountStartUiProvider())
         vm.uiEffect.test {
-            vm.handleEvent(OnboardingEvent.GoToCreatePin)
-            assertEquals(OnboardingUiEffect.NavigateToCreatePin, awaitItem())
+            vm.handleEvent(AccountEvent.GoToCreatePin)
+            assertEquals(AccountUiEffect.NavigateToCreatePin, awaitItem())
             cancelAndConsumeRemainingEvents()
         }
     }
 
     @Test
     fun `LinkBank does not emit navigation effect yet`() = runTest {
-        val vm = OnboardingViewModel(uiProvider = FakeOnboardingStartUiProvider())
+        val vm = AccountViewModel(uiProvider = FakeAccountStartUiProvider())
         vm.uiEffect.test {
-            vm.handleEvent(OnboardingEvent.LinkBank)
+            vm.handleEvent(AccountEvent.LinkBank)
             expectNoEvents()
             cancelAndConsumeRemainingEvents()
         }
@@ -31,9 +31,9 @@ class OnboardingViewModelTest {
 
     @Test
     fun `SavingGoals does not emit navigation effect yet`() = runTest {
-        val vm = OnboardingViewModel(uiProvider = FakeOnboardingStartUiProvider())
+        val vm = AccountViewModel(uiProvider = FakeAccountStartUiProvider())
         vm.uiEffect.test {
-            vm.handleEvent(OnboardingEvent.SavingGoals)
+            vm.handleEvent(AccountEvent.SavingGoals)
             expectNoEvents()
             cancelAndConsumeRemainingEvents()
         }
@@ -41,9 +41,9 @@ class OnboardingViewModelTest {
 
     @Test
     fun `ExitProcess does not emit navigation effect yet`() = runTest {
-        val vm = OnboardingViewModel(uiProvider = FakeOnboardingStartUiProvider())
+        val vm = AccountViewModel(uiProvider = FakeAccountStartUiProvider())
         vm.uiEffect.test {
-            vm.handleEvent(OnboardingEvent.ExitProcess)
+            vm.handleEvent(AccountEvent.ExitProcess)
             expectNoEvents()
             cancelAndConsumeRemainingEvents()
         }
@@ -51,22 +51,22 @@ class OnboardingViewModelTest {
 }
 
 
-class FakeOnboardingStartUiProvider : OnboardingStartUiProvider {
+class FakeAccountStartUiProvider : AccountStartUiProvider {
     override fun options(): List<OnboardingOptionUIModel> = listOf(
         OnboardingOptionUIModel(
-            event = OnboardingEvent.GoToCreatePin,
+            event = AccountEvent.GoToCreatePin,
             titleRes = 1,
             subtitleRes = 2,
             imageRes = 3
         ),
         OnboardingOptionUIModel(
-            event = OnboardingEvent.LinkBank,
+            event = AccountEvent.LinkBank,
             titleRes = 4,
             subtitleRes = 5,
             imageRes = 6
         ),
         OnboardingOptionUIModel(
-            event = OnboardingEvent.SavingGoals,
+            event = AccountEvent.SavingGoals,
             titleRes = 7,
             subtitleRes = 8,
             imageRes = 9

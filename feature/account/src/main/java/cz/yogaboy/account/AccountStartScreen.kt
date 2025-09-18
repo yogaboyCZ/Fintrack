@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -32,39 +33,40 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import cz.yogaboy.account.navigation.AccountRoutes
+import androidx.navigation.NavHostController
+import cz.yogaboy.account.navigation.AccountCreatePin
 import cz.yogaboy.ui.theme.FintrackTheme
 import cz.yogaboy.ui.util.highlightBrand
-import kotlin.collections.forEach
 import cz.yogaboy.ui.R as LR
-import cz.yogaboy.ui.R.drawable as DR
 
 @Composable
-fun OnboardingStartRoute(
-    navController: NavController,
+fun AccountStartRoute(
+    navController: NavHostController,
 ) {
-    val vm: OnboardingViewModel = viewModel()
+    val vm: AccountViewModel = viewModel()
 
     LaunchedEffect(Unit) {
         vm.uiEffect.collect { effect ->
             when (effect) {
-                OnboardingUiEffect.NavigateToCreatePin ->
-                    navController.navigate(AccountRoutes.CREATE_PIN)
+                AccountUiEffect.NavigateToCreatePin -> {
+                    navController.navigate(AccountCreatePin) {
+                        launchSingleTop = true
+                    }
+                }
             }
         }
     }
 
-    OnboardingStartScreen(
+    AccountStartScreen(
         state = vm.uiState.collectAsStateWithLifecycle().value,
         onClick = vm::handleEvent,
     )
 }
 
 @Composable
-fun OnboardingStartScreen(
-    state: OnboardingUiState,
-    onClick: (OnboardingEvent) -> Unit,
+fun AccountStartScreen(
+    state: AccountUiState,
+    onClick: (AccountEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -75,7 +77,7 @@ fun OnboardingStartScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         OnboardingWelcomeHeader()
-        Spacer(Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         Column(
             modifier = Modifier
@@ -88,7 +90,7 @@ fun OnboardingStartScreen(
             state.options.forEach { option ->
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(FintrackTheme.dimens.small),
+                    elevation = CardDefaults.cardElevation(defaultElevation = FintrackTheme.dimens.small),
                     colors = CardDefaults.cardColors(),
                     onClick = { onClick(option.event) },
                 ) {
@@ -109,9 +111,11 @@ fun OnboardingStartScreen(
                         },
                         trailingContent = {
                             Image(
-                                imageVector = ImageVector.vectorResource(option.imageRes),
+                                imageVector = ImageVector.vectorResource(id = option.imageRes),
                                 contentDescription = null,
-                                modifier = Modifier.padding(start = FintrackTheme.dimens.small),
+                                modifier = Modifier
+                                    .padding(start = FintrackTheme.dimens.small)
+                                    .size(124.dp),
                             )
                         }
                     )
@@ -119,7 +123,7 @@ fun OnboardingStartScreen(
             }
         }
         Button(
-            onClick = { onClick(OnboardingEvent.ExitProcess) },
+            onClick = { onClick(AccountEvent.ExitProcess) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = FintrackTheme.dimens.xlarge),
@@ -169,10 +173,10 @@ private fun OnboardingWelcomeHeader() {
 @Preview(showBackground = true)
 @Composable
 private fun OnboardingStartScreenPreview(
-    @PreviewParameter(OnboardingStartPreviewProvider::class) state: OnboardingUiState
+    @PreviewParameter(AccountStartPreviewProvider::class) state: AccountUiState,
 ) {
     FintrackTheme {
-        OnboardingStartScreen(
+        AccountStartScreen(
             state = state,
             onClick = {}
         )
