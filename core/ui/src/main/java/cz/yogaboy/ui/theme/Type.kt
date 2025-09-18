@@ -17,10 +17,7 @@ private val fontProvider = GoogleFont.Provider(
 
 @OptIn(ExperimentalTextApi::class)
 val AppFontFamily: FontFamily = FontFamily(
-    Font(GoogleFont("Instrument Sans"), fontProvider, FontWeight.Normal),
-    Font(GoogleFont("Instrument Sans"), fontProvider, FontWeight.Medium),
-    Font(GoogleFont("Instrument Sans"), fontProvider, FontWeight.SemiBold),
-    Font(GoogleFont("Instrument Sans"), fontProvider, FontWeight.Bold)
+    Font(GoogleFont("Capriola"), fontProvider, FontWeight.Normal)
 )
 private val base = Typography()
 
