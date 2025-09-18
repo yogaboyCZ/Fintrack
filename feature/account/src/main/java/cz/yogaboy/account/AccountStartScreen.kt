@@ -3,6 +3,7 @@ package cz.yogaboy.account
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +14,9 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -24,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -89,36 +93,48 @@ fun AccountStartScreen(
         ) {
             state.options.forEach { option ->
                 Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    elevation = CardDefaults.cardElevation(defaultElevation = FintrackTheme.dimens.small),
-                    colors = CardDefaults.cardColors(),
+                    modifier = Modifier
+                        .shadow(FintrackTheme.dimens.small, shape = shape, clip = false)
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape(FintrackTheme.dimens.medium),
+                    colors = CardDefaults.cardColors(
+                        containerColor = FintrackTheme.colors.surface,
+                        contentColor = FintrackTheme.colors.onSurface
+                    ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                     onClick = { onClick(option.event) },
                 ) {
-                    ListItem(
-                        headlineContent = {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(FintrackTheme.dimens.large),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
                             Text(
                                 text = stringResource(option.titleRes),
                                 style = FintrackTheme.textStyles.titleM,
                                 color = FintrackTheme.colors.onSurface,
                             )
-                        },
-                        supportingContent = {
                             Text(
                                 text = stringResource(option.subtitleRes),
                                 style = FintrackTheme.textStyles.contentM,
                                 color = FintrackTheme.colors.onSurfaceVariant,
                             )
-                        },
-                        trailingContent = {
-                            Image(
-                                imageVector = ImageVector.vectorResource(id = option.imageRes),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .padding(start = FintrackTheme.dimens.small)
-                                    .size(124.dp),
-                            )
                         }
-                    )
+
+                        Image(
+                            imageVector = ImageVector.vectorResource(option.imageRes),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(start = FintrackTheme.dimens.large)
+                                .size(124.dp),
+                        )
+                    }
                 }
             }
         }
