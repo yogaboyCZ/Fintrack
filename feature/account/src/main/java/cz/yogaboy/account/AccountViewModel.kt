@@ -19,7 +19,6 @@ sealed interface AccountEvent {
 
 data class AccountUiState(
     val options: List<OnboardingOptionUIModel>,
-    @StringRes val exitButton: Int,
 )
 
 sealed interface AccountUiEffect {
@@ -33,7 +32,6 @@ class AccountViewModel(
     private val _uiState = MutableStateFlow(
         AccountUiState(
             options = uiProvider.options(),
-            exitButton = uiProvider.exitButton(),
         )
     )
     val uiState: StateFlow<AccountUiState> = _uiState

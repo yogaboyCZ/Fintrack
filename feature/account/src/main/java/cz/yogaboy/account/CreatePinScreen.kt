@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -23,6 +24,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -131,7 +133,7 @@ fun CreatePinScreen(
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun PinTopBar(onEvent: (CreatePinEvent) -> Unit) {
-    TopAppBar(
+    CenterAlignedTopAppBar(
         title = {
             Text(
                 text = stringResource(LR.string.onb_create_pin_title),
@@ -154,49 +156,54 @@ private fun PinTopBar(onEvent: (CreatePinEvent) -> Unit) {
 }
 
 @Composable
-fun PasswordRow(state: CreatePinUiState) {
-    Row(
+private fun PasswordRow(state: CreatePinUiState) {
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = FintrackTheme.dimens.xxlarge),
-        horizontalArrangement = Arrangement.spacedBy(FintrackTheme.dimens.default),
+        contentAlignment = Alignment.Center
     ) {
-        repeat(4) { index ->
-            val filled = state.digits[index] != null
-            val showDigit = filled && state.maskDigit[index]
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(FintrackTheme.dimens.default),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            repeat(4) { index ->
+                val filled = state.digits[index] != null
+                val showDigit = filled && state.maskDigit[index]
 
-            Surface(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(56.dp),
-                shape = RoundedCornerShape(FintrackTheme.dimens.radiusSmall),
-                color = FintrackTheme.colors.surfaceVariant,
-                border = BorderStroke(
-                    1.dp,
-                    if (filled) FintrackTheme.colors.primary else FintrackTheme.colors.outline,
-                )
-            ) {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize(),
+                Surface(
+                    modifier = Modifier
+                        .width(56.dp)
+                        .height(56.dp),
+                    shape = RoundedCornerShape(FintrackTheme.dimens.radiusSmall),
+                    color = FintrackTheme.colors.surfaceVariant,
+                    border = BorderStroke(
+                        1.dp,
+                        if (filled) FintrackTheme.colors.primary else FintrackTheme.colors.outline,
+                    )
                 ) {
-                    when {
-                        showDigit -> Text(
-                            text = state.digits[index].toString(),
-                            style = FintrackTheme.textStyles.titleM,
-                            color = FintrackTheme.colors.onSurface,
-                        )
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        when {
+                            showDigit -> Text(
+                                text = state.digits[index].toString(),
+                                style = FintrackTheme.textStyles.titleM,
+                                color = FintrackTheme.colors.onSurface,
+                            )
 
-                        filled -> Box(
-                            modifier = Modifier
-                                .size(12.dp)
-                                .background(
-                                    FintrackTheme.colors.onSurface,
-                                    CircleShape
-                                ),
-                        )
+                            filled -> Box(
+                                modifier = Modifier
+                                    .size(12.dp)
+                                    .background(
+                                        FintrackTheme.colors.onSurface,
+                                        CircleShape
+                                    ),
+                            )
 
-                        else -> Unit
+                            else -> Unit
+                        }
                     }
                 }
             }
@@ -288,29 +295,14 @@ private fun KeyButton(
     )
 }
 
-
-//@Preview (showBackground = true)
-//@Composable
-//fun CreatePinScreenPreview() {
-//    val state = OnboardingUiState(
-//        options = listOf(
-//            OnboardingOptionUIModel(
-//                event = OnboardingEvent.GoToCreatePin,
-//                titleRes = R.string.app_name,
-//                subtitleRes = R.string.app_name,
-//                imageRes = R.drawable.ic_launcher_background
-//            )
-//        ),
-//        exitButton = R.string.app_name
-//    )
-//    CreatePinScreen(state = state, onClick = {})
-//}
-
 @Preview(showBackground = true)
 @Composable
-private fun VectorOnlyPreview() {
-    val iv = ImageVector.vectorResource(id = DR.ic_trading)
-    val painter = rememberVectorPainter(image = iv)
-    Image(painter = painter, contentDescription = null)
+fun CreatePinScreenPreview() {
+    val state = CreatePinUiState(
+        digits = listOf(1, 2, 3, null),
+        maskDigit = listOf(false, false, false, false),
+        isSubmitting = false
+    )
+    CreatePinScreen(state = state, onEvent = {})
 }
 

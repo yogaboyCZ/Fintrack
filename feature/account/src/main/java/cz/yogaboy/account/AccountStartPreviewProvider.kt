@@ -28,7 +28,6 @@ internal class AccountStartPreviewProvider : PreviewParameterProvider<AccountUiS
                     imageRes = DR.ic_preview_wallet_24
                 )
             ),
-            exitButton = LR.string.onb_start_button_skip
         )
     )
 }

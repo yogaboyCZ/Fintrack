@@ -21,7 +21,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -63,14 +62,14 @@ fun AccountStartRoute(
 
     AccountStartScreen(
         state = vm.uiState.collectAsStateWithLifecycle().value,
-        onClick = vm::handleEvent,
+        event = vm::handleEvent,
     )
 }
 
 @Composable
 fun AccountStartScreen(
     state: AccountUiState,
-    onClick: (AccountEvent) -> Unit,
+    event: (AccountEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -102,7 +101,7 @@ fun AccountStartScreen(
                         contentColor = FintrackTheme.colors.onSurface
                     ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-                    onClick = { onClick(option.event) },
+                    onClick = { event(option.event) },
                 ) {
                     Row(
                         modifier = Modifier
@@ -139,7 +138,7 @@ fun AccountStartScreen(
             }
         }
         Button(
-            onClick = { onClick(AccountEvent.ExitProcess) },
+            onClick = { event(AccountEvent.ExitProcess) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = FintrackTheme.dimens.xlarge),
@@ -149,11 +148,10 @@ fun AccountStartScreen(
             )
         ) {
             Text(
-                text = stringResource(state.exitButton),
+                text = stringResource(LR.string.onb_start_button_skip),
                 style = FintrackTheme.textStyles.contentL,
             )
         }
-
     }
 }
 
@@ -194,7 +192,7 @@ private fun OnboardingStartScreenPreview(
     FintrackTheme {
         AccountStartScreen(
             state = state,
-            onClick = {}
+            event = {}
         )
     }
 }
