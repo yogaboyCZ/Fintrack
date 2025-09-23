@@ -183,7 +183,6 @@ private fun OnboardingWelcomeHeader() {
     }
 }
 
-// DON'T know why Preview with painterResource crashes
 @Preview(showBackground = true)
 @Composable
 private fun OnboardingStartScreenPreview(
@@ -196,12 +195,3 @@ private fun OnboardingStartScreenPreview(
         )
     }
 }
-// DON'T know why Preview with painterResource crashes
-//@Preview(showBackground = true)
-//@Composable
-//private fun VectorOnlyPreview() {
-//    Icon(
-//        painter = painterResource(R.drawable.ic_preview_wallet_24),
-//        contentDescription = null
-//    )
-//}

@@ -300,8 +300,8 @@ private fun KeyButton(
 fun CreatePinScreenPreview() {
     val state = CreatePinUiState(
         digits = listOf(1, 2, 3, null),
-        maskDigit = listOf(false, false, false, false),
-        isSubmitting = false
+        maskDigit = listOf(true, true, false, false),
+        isSubmitting = true,
     )
     CreatePinScreen(state = state, onEvent = {})
 }
