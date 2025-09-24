@@ -43,6 +43,10 @@
     <string name="onb_tour_sign_in">Sign in</string>
 
     <string name="onb_sheet_title">Create an account</string>
-    <string name="onb_sheet_body">By pressing accept below you agree to our Terms and Conditions. You can find out more about how we use your data in our Privacy Policy.</string>
+    <string name="onb_sheet_prefix">By pressing accept below you agree to our </string>
+    <string name="onb_terms">Terms and Conditions</string>
+    <string name="onb_middle">. You can find out more about how we use your data in our </string>
+    <string name="onb_privacy">Privacy Policy</string>
+    <string name="onb_suffix">.</string>
     <string name="onb_sheet_btn">Accept and Continue</string>
 </resources>

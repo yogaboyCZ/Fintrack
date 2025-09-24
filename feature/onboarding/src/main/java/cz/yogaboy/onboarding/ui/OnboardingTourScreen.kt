@@ -1,5 +1,6 @@
 package cz.yogaboy.onboarding.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,6 +29,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -38,15 +40,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import cz.yogaboy.ui.theme.FintrackTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -222,55 +232,119 @@ fun OnboardingTourScreen(
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
         val scope = rememberCoroutineScope()
 
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = { onEvent(OnboardingTourEvent.BottomSheetDismissed) },
-            shape = RoundedCornerShape(
-                topStart = FintrackTheme.dimens.radiusLarge,
-                topEnd = FintrackTheme.dimens.radiusLarge,
-            ),
+        OnboardingModalBottomSheet(sheetState, onEvent, scope)
+    }
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun OnboardingModalBottomSheet(
+    sheetState: SheetState,
+    onEvent: (OnboardingTourEvent) -> Unit,
+    scope: CoroutineScope
+) {
+    val context = LocalContext.current
+
+    val prefix = stringResource(LR.string.onb_sheet_prefix)
+    val termsText = stringResource(LR.string.onb_terms)
+    val middle = stringResource(LR.string.onb_middle)
+    val privacyText = stringResource(LR.string.onb_privacy)
+    val suffix = stringResource(LR.string.onb_suffix)
+
+    val linkStyle = SpanStyle(
+        color = FintrackTheme.colors.primary,
+        textDecoration = TextDecoration.Underline
+    )
+
+    val body = buildAnnotatedString {
+        append(prefix)
+        withLink(
+            LinkAnnotation.Clickable(
+                tag = "terms",
+                styles = TextLinkStyles(linkStyle),
+                linkInteractionListener = {
+                    Toast.makeText(
+                        context,
+                        "Clicked Terms",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            )
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = FintrackTheme.dimens.xlarge,
-                        vertical = FintrackTheme.dimens.large,
-                    ),
-                verticalArrangement = Arrangement.spacedBy(FintrackTheme.dimens.default),
+            append(" ")
+            append(termsText)
+        }
+        append(middle)
+        withLink(
+            LinkAnnotation.Clickable(
+                tag = "privacy",
+                styles = TextLinkStyles(linkStyle),
+                linkInteractionListener = {
+                    Toast.makeText(
+                        context,
+                        "Clicked Privacy Policy",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            )
+        ) {
+            append(" ")
+            append(privacyText)
+        }
+        append(suffix)
+    }
+
+    ModalBottomSheet(
+        sheetState = sheetState,
+        onDismissRequest = { onEvent(OnboardingTourEvent.BottomSheetDismissed) },
+        shape = RoundedCornerShape(
+            topStart = FintrackTheme.dimens.radiusLarge,
+            topEnd = FintrackTheme.dimens.radiusLarge,
+        ),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = FintrackTheme.dimens.xlarge,
+                    vertical = FintrackTheme.dimens.large,
+                ),
+            verticalArrangement = Arrangement.spacedBy(FintrackTheme.dimens.default),
+        ) {
+            Text(
+                text = stringResource(LR.string.onb_sheet_title),
+                style = FintrackTheme.textStyles.titleM,
+                color = FintrackTheme.colors.onBackground,
+            )
+
+            Text(
+                text = body,
+                style = FintrackTheme.textStyles.contentM.copy(color = FintrackTheme.colors.onSurfaceVariant)
+            )
+
+            Spacer(modifier = Modifier.height(FintrackTheme.dimens.large))
+
+            Button(
+                onClick = {
+                    scope.launch {
+                        sheetState.hide()
+                        onEvent(OnboardingTourEvent.NavigateToCreateAccount)
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = FintrackTheme.colors.primary,
+                    contentColor = FintrackTheme.colors.onPrimary,
+                ),
+                shape = RoundedCornerShape(FintrackTheme.dimens.radiusLarge),
             ) {
                 Text(
-                    text = stringResource(LR.string.onb_sheet_title),
-                    style = FintrackTheme.textStyles.titleM,
-                    color = FintrackTheme.colors.onBackground,
+                    text = stringResource(LR.string.onb_sheet_btn),
+                    style = FintrackTheme.textStyles.contentL,
                 )
-                Text(
-                    text = stringResource(LR.string.onb_sheet_body),
-                    style = FintrackTheme.textStyles.contentM,
-                    color = FintrackTheme.colors.onSurfaceVariant,
-                )
-                Spacer(modifier = Modifier.height(FintrackTheme.dimens.large))
-                Button(
-                    onClick = {
-                        scope.launch {
-                            sheetState.hide()
-                            onEvent(OnboardingTourEvent.NavigateToCreateAccount)
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = FintrackTheme.colors.primary,
-                        contentColor = FintrackTheme.colors.onPrimary,
-                    ),
-                    shape = RoundedCornerShape(FintrackTheme.dimens.radiusLarge),
-                ) {
-                    Text(
-                        text = stringResource(LR.string.onb_sheet_btn),
-                        style = FintrackTheme.textStyles.contentL,
-                    )
-                }
-                Spacer(modifier = Modifier.height(FintrackTheme.dimens.large))
             }
+
+            Spacer(modifier = Modifier.height(FintrackTheme.dimens.large))
         }
     }
 }
