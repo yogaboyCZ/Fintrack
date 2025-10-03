@@ -1,0 +1,4 @@
+[submodule "gradle-plugins"]
+	path = gradle-plugins
+	url = git@github.com:yogaboyCZ/gradle-plugins.git
+	branch = main
