@@ -52,6 +52,8 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:account"))
+    implementation(project(":feature:dashboard"))
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

@@ -15,6 +15,8 @@ sealed interface AccountEvent {
     data object LinkBank : AccountEvent
     data object SavingGoals : AccountEvent
     data object ExitProcess : AccountEvent
+    data object SkipForNow : AccountEvent
+
 }
 
 data class AccountUiState(
@@ -23,6 +25,7 @@ data class AccountUiState(
 
 sealed interface AccountUiEffect {
     data object NavigateToCreatePin : AccountUiEffect
+    data object NavigateToDashboard : AccountUiEffect
 }
 
 class AccountViewModel(
@@ -44,6 +47,8 @@ class AccountViewModel(
             AccountEvent.GoToCreatePin -> {
                 viewModelScope.launch { _uiEffect.emit(AccountUiEffect.NavigateToCreatePin) }
             }
+            AccountEvent.SkipForNow -> viewModelScope.launch { _uiEffect.emit(AccountUiEffect.NavigateToDashboard) }
+
             AccountEvent.LinkBank -> Unit
             AccountEvent.SavingGoals -> Unit
             AccountEvent.ExitProcess -> Unit

@@ -45,6 +45,7 @@ import cz.yogaboy.ui.R as LR
 @Composable
 fun AccountStartRoute(
     navController: NavHostController,
+    onExitToDashboard: () -> Unit,
 ) {
     val vm: AccountViewModel = viewModel()
 
@@ -52,10 +53,9 @@ fun AccountStartRoute(
         vm.uiEffect.collect { effect ->
             when (effect) {
                 AccountUiEffect.NavigateToCreatePin -> {
-                    navController.navigate(AccountCreatePin) {
-                        launchSingleTop = true
-                    }
+                    navController.navigate(AccountCreatePin) { launchSingleTop = true }
                 }
+                AccountUiEffect.NavigateToDashboard -> onExitToDashboard()
             }
         }
     }
@@ -138,7 +138,7 @@ fun AccountStartScreen(
             }
         }
         Button(
-            onClick = { event(AccountEvent.ExitProcess) },
+            onClick = { event(AccountEvent.SkipForNow) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = FintrackTheme.dimens.xlarge),
