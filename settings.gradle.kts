@@ -1,17 +1,14 @@
+includeBuild("gradle-plugins")
+
 pluginManagement {
     includeBuild("gradle-plugins")
     repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
+        google()
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -21,7 +18,14 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Fintrack"
-include(":app")
-include(":core:ui")
-include(":feature:account")
-include(":feature:onboarding")
+
+include(
+    ":app",
+    ":core:ui",
+    ":feature:account",
+    ":feature:onboarding",
+    ":feature:dashboard",
+    ":feature:budget",
+    ":feature:savings",
+    ":feature:expenses"
+)

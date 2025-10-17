@@ -1,6 +1,7 @@
 plugins {
     id("cz.yogaboy.android-library")
     id("cz.yogaboy.compose-conventions")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
