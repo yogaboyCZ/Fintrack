@@ -18,6 +18,10 @@ data class Dimens(
     val radiusSmall: Dp = 8.dp,
     val radiusMedium: Dp = 12.dp,
     val radiusLarge: Dp = 16.dp,
+    val cardHeight: Dp = 160.dp,
+    val cardWidth: Dp = 340.dp,
+    val sectionSpacing: Dp = 20.dp,
+    val iconSize: Dp = 28.dp,
 )
 
 val LocalDimens: ProvidableCompositionLocal<Dimens> = staticCompositionLocalOf { Dimens() }

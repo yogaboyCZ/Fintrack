@@ -49,4 +49,15 @@
     <string name="onb_privacy">Privacy Policy</string>
     <string name="onb_suffix">.</string>
     <string name="onb_sheet_btn">Accept and Continue</string>
+    <!-- Dashboard / Home screen -->
+    <string name="dashboard_title">Dashboard</string>
+    <string name="dashboard_subtitle">Your financial journey starts here.</string>
+    <string name="dashboard_week_title">"Your Week"</string>
+
+
+    <string name="nav_home">Home</string>
+    <string name="nav_budgets">Budgets</string>
+    <string name="nav_savings">Savings</string>
+    <string name="nav_expenses">Expenses</string>
+    <string name="nav_account">Account</string>
 </resources>
